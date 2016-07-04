@@ -1,0 +1,79 @@
+#include<stdio.h>
+#include<stdlib.h>
+ struct node{
+	int data;
+	struct node *next,*prev;
+	};
+	void insert(struct node **head_ref,int dat)
+	{
+		struct node *current;
+		struct node *newnode=(struct node *)malloc(sizeof(struct node));
+		newnode->data=dat;
+		newnode->next=NULL;
+		current=*head_ref;
+		if(*head_ref==NULL){
+			newnode->prev=NULL;
+			*head_ref=newnode;
+			}
+				while(current->next!=NULL)
+				current=current->next;
+				newnode->prev=current;
+				current->next=newnode;
+				}
+	void print(struct node *head_ref){
+		struct node *current;
+		current=head_ref;
+		while(current!=NULL){
+			printf("%d",current->data);
+			current=current->next;
+			}
+			}
+	void delete( struct node **head_ref ){
+		struct node * current;
+		current=*head_ref;
+	   int position,k;
+	   printf("enter position");
+	   scanf("%d",&position);
+	   if(position==1){
+	   *head_ref=current->next;
+	   (*head_ref)->prev=NULL;
+	   return; 
+	   }
+	   
+		   while((current!=NULL)&&(k<position)){
+			   k++;
+			   current=current->next;
+			   }
+			   if(current->next==NULL)
+			   current->prev->next=NULL;
+			   else{
+				   current->prev->next=current->next;
+				   current->next->prev=current->prev;
+			       }
+			       return;
+				   }
+		void newprint(struct node *head_ref){
+			struct node *current;
+			current=head_ref;
+			while(current!=NULL){
+				printf("%d",current->data);
+				current=current->next;
+				}
+				}
+	   int main()
+	   {
+		   struct node *head=NULL;
+		   insert(&head,1);
+		   insert(&head,5);
+		   insert(&head,4);
+		   insert(&head,8);
+		   print(head);
+		   delete(&head);
+		   newprint(head);
+		   return 0;
+		   }
+				   
+		
+		
+			
+			
