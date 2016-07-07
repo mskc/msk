@@ -11,12 +11,14 @@
 		newnode->data=dat;
 		newnode->next=NULL;
 		current=*head_ref;
-		if(*head_ref==NULL){
+		if(current==NULL){
 			newnode->prev=NULL;
 			*head_ref=newnode;
 			}
-				while(current->next!=NULL)
+			else{
+				while(current!=NULL)
 				current=current->next;
+			     }
 		newnode->prev=current;
 		current->next=newnode;
 	}
