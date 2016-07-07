@@ -37,7 +37,6 @@
 	   if(position==1){
 	   *head_ref=current->next;
 	   (*head_ref)->prev=NULL;
-	   return; 
 	   }
 	   
 		   while((current!=NULL)&&(k<position)){
@@ -50,7 +49,6 @@
 				   current->prev->next=current->next;
 				   current->next->prev=current->prev;
 			       }
-			       return;
 				   }
 		void newprint(struct node *head_ref){
 			struct node *current;
