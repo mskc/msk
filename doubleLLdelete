@@ -54,17 +54,7 @@
 				   current->next->prev=current->prev;
 			       }
 	}
-	void newprint(struct node *head_ref)
-	{
-			struct node *current;
-			current=head_ref;
-			while(current!=NULL)
-			{
-				printf("%d",current->data);
-				current=current->next;
-			}
-	}
-	 int main()
+	int main()
 	 {
 		   struct node *head=NULL;
 		   insert(&head,1);
@@ -73,7 +63,8 @@
 		   insert(&head,8);
 		   print(head);
 		   delete(&head);
-		   newprint(head);
+		   prinf("\n new linked list is\n"); 
+		   print(head);
 		   return 0;
 	 }
 				   
