@@ -17,49 +17,55 @@
 			}
 				while(current->next!=NULL)
 				current=current->next;
-				newnode->prev=current;
-				current->next=newnode;
-				}
-	void print(struct node *head_ref){
+		newnode->prev=current;
+		current->next=newnode;
+	}
+	void print(struct node *head_ref)
+	{
 		struct node *current;
 		current=head_ref;
 		while(current!=NULL){
 			printf("%d",current->data);
 			current=current->next;
 			}
-			}
-	void delete( struct node **head_ref ){
+	}
+	void delete( struct node **head_ref )
+	{
 		struct node * current;
 		current=*head_ref;
 	   int position,k;
 	   printf("enter position");
 	   scanf("%d",&position);
-	   if(position==1){
+	   if(position==1)
+	   {
 	   *head_ref=current->next;
 	   (*head_ref)->prev=NULL;
 	   }
 	   
-		   while((current!=NULL)&&(k<position)){
+		   while((current!=NULL)&&(k<position))
+		   {
 			   k++;
 			   current=current->next;
-			   }
+	           }
 			   if(current->next==NULL)
 			   current->prev->next=NULL;
 			   else{
 				   current->prev->next=current->next;
 				   current->next->prev=current->prev;
 			       }
-				   }
-		void newprint(struct node *head_ref){
+	}
+	void newprint(struct node *head_ref)
+	{
 			struct node *current;
 			current=head_ref;
-			while(current!=NULL){
+			while(current!=NULL)
+			{
 				printf("%d",current->data);
 				current=current->next;
-				}
-				}
-	   int main()
-	   {
+			}
+	}
+	 int main()
+	 {
 		   struct node *head=NULL;
 		   insert(&head,1);
 		   insert(&head,5);
@@ -69,7 +75,7 @@
 		   delete(&head);
 		   newprint(head);
 		   return 0;
-		   }
+	 }
 				   
 		
 		
