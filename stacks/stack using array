@@ -1,0 +1,60 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<limits.h>
+struct stack
+ {
+	int top;
+	int capacity;
+	int *array;
+ };
+	struct stack *createstack(int capacity)
+ {
+		struct stack *s=(struct stack*)malloc(sizeof(struct stack));
+		s->capacity=capacity;
+		s->top=-1;
+		s->array=(int *)malloc(s->capacity*sizeof(int));
+		return s;
+ }
+	int fullstack(struct stack *s)
+	{
+		return (s->top==s->capacity-1);
+	}
+	int emptystack(struct stack *s)
+		{
+			return s->top==-1;
+		}
+	void push(struct stack *s,int data)
+	{
+		if(fullstack(s))
+		 return;
+		 s->array[++s->top]=data;
+		 printf("\n%d is pushed in to stack",data);
+	}
+	int pop(struct stack *s)
+	{
+		if(emptystack(s))
+		return INT_MIN;
+		return s->array[s->top--];
+	}
+	int peek(struct stack *s)
+	{
+		if(emptystack(s))
+		return INT_MIN;
+		return s->array[s->top];
+	}
+	int main()
+	{
+		struct stack *s=createstack(10);
+		int p;
+		push(s,12);
+		push(s,4);
+		push(s,15);
+		push(s,25);
+		p=pop(s);
+		printf("\n%d is popped",p);
+	   printf("\n%d is on top",peek(s));
+	  return 0;
+	 }
+			
+	
+		
