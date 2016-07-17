@@ -62,7 +62,7 @@ void absolutesort(struct node *head)
 {
 	struct node *temp;
 	temp=head;
-	int i,j;
+	int i,j,f=0;
 	for(i=0;i<size(head);i++)
 	{
 		temp=head;
@@ -71,11 +71,12 @@ void absolutesort(struct node *head)
 			if(abs(temp->data)>abs(temp->next->data))
 			{
 			swap(temp);
+			f=1;
 			}
-			//printf("\n%d n%d",temp->data,temp->next->data);
-			//printf("\n");
 			temp=temp->next;
 		}
+	        if(!f)
+	        break;
 	}
 }
 int main()
