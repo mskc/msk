@@ -88,32 +88,38 @@ void deleteduplicatenode(struct node **head)
 	{
        t=temp->data;
        p=temp;
-       if(t==p->next->data)
-       {
-         while(p->next->data==t)
-         p->next=p->next->next;
-         temp=p->next;
-       }
+       //printf("\nd");
+       if(temp->next!=NULL&&t==temp->next->data)
+        {
+           while(p->next!=NULL&&p->next->data==t)
+           p->next=p->next->next;
+           temp=p->next;
+           //printf("\nt");
+        }
        else
-       temp=temp->next;
-       
-	}
+	   {
+	   	 //printf("\ny");
+         temp=temp->next;
+        }  
+        //printf("\nu");
+    }
 }
 int main()
 {
 	struct node *head=createnode();
 	insert(&head,5);
-	insert(&head,3);
-	insert(&head,25);
-	insert(&head,3);
-	insert(&head,45);
+	insert(&head,5);
+	insert(&head,5);
+	insert(&head,5);
+	insert(&head,5);
 	print(head);
 	printf("\nsorted list is");
 	absolutesort(head);
 	print(head);
-//	deleteduplicatenode(&head);
-//	print(head); 
-	return;
+	printf("\nafter deleting duplicate node");
+	deleteduplicatenode(&head);
+	print(head); 
+	return 0;
 }
 	
 	
