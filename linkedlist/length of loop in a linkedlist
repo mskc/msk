@@ -1,0 +1,103 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+	int data;
+	struct node *next;
+};
+struct node *insert(struct node **head,int data)
+{
+	struct node *newnode=(struct node *)malloc(sizeof(struct node));
+	struct node *temp,*p;
+	newnode->data=data;
+	newnode->next=NULL;
+	if(*head==NULL)
+	{
+	*head=newnode;
+	return;
+	}
+	temp=*head;
+	while(temp!=NULL)
+	{
+   p=temp;
+	temp=temp->next;
+	}
+	p->next=newnode;
+	return newnode;
+	}
+	void loop(struct node **head,struct node *t)
+	{
+		struct node *temp,*p;
+		temp=*head;
+		while(temp!=NULL)
+	  {
+      p=temp;
+	   temp=temp->next;
+	   }
+	   p->next=t;
+	}
+	int looplength(struct node *head)
+	{
+		struct node *s,*f;
+		int loop=0,count=0;
+		s=f=head;
+		while(s&&f)
+		{
+			f=f->next;
+			if(s==f)
+			{
+			loop=1;
+			break;
+			}
+			f=f->next;
+			if(s==f)
+			{
+			loop=1;
+			break;
+			}
+			s=s->next;
+		}
+		if(loop)
+		{
+			f=f->next;
+			while(s!=f)
+			{
+				count++;
+				f=f->next;
+			}
+			return count+1;
+		}
+   }
+	void print(struct node *head,struct node *n)
+	{
+		struct node *temp;
+		temp=head;
+		while(temp!=n)
+		{
+			printf("\n%d",temp->data);
+			temp=temp->next;
+		}
+		printf("\n%d\n %d",n->data,n->next->data);
+	}
+	int main()
+	{
+		struct node *head=NULL;
+		struct node *t,*n;
+		insert(&head,3);
+		insert(&head,6);
+		insert(&head,8);
+		insert(&head,9);
+		insert(&head,3);
+		t=insert(&head,12);
+		insert(&head,18);
+		insert(&head,4);
+		insert(&head,26);
+		n=insert(&head,78);
+		loop(&head,t);
+		print(head,n);
+		printf("\nlength of loop is %d",looplength(head));
+		return 0;
+		}
+	
+	
+	

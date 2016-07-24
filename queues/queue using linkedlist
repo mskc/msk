@@ -1,0 +1,89 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<limits.h>
+struct node
+{
+	int data;
+	struct node *next;
+};
+struct queue
+{
+		struct node *front,*rear;
+ };
+ struct queue *create()
+ {
+	  struct queue *q=(struct queue*)malloc(sizeof(struct queue));
+	  struct node *temp=(struct node *)malloc(sizeof(struct node));
+	  if(!q)return NULL;
+	  q->front=q->rear=NULL;
+     return q;	  
+ }
+ int empty(struct queue *q)
+	 { 
+	   return q->front==NULL;
+	  }
+void enqueue(struct queue *q,int data)
+	{
+		struct node *newnode=(struct node *)malloc(sizeof(struct node));
+		if(!newnode)return NULL;
+		newnode->data=data;
+		newnode->next=NULL;
+		if(q->rear==NULL)
+		{
+		q->rear=q->front=newnode;
+		printf("%d is enqueued",data);
+		return;
+		}
+		q->rear->next=newnode;
+		q->rear=newnode;
+		printf("\n%d is enqueued",data);
+	}
+struct node *dequeue(struct queue *q)
+	{
+		if(empty(q))return INT_MIN;
+		struct node *temp;
+		temp=q->front;
+		q->front=q->front->next;
+		if(q->front==NULL)
+		q->rear=NULL;
+		return temp;
+	}
+int size(struct queue *q)
+	{
+		int count=0;
+		if(empty(q))return count;
+		struct node *temp;
+		temp=q->front;
+		while(temp!=q->rear)
+		{
+			
+			++count;
+			temp=temp->next;
+		}
+		return count+1;
+	}
+int main()
+	{
+		struct queue *q=create();
+		enqueue(q,3);
+		enqueue(q,5);
+		enqueue(q,7);
+		enqueue(q,9);
+		enqueue(q,13);
+	   printf("\nsize of queue is %d",size(q));
+		struct node *n=dequeue(q);
+		printf("\n%d is removed",n->data);
+		printf("\nsize of queue is %d",size(q));
+		n=dequeue(q);
+		printf("\n%d is removed",n->data);
+		printf("\nsize of queue is %d",size(q));
+		n=dequeue(q);
+		printf("\n%d is removed",n->data);
+		enqueue(q,2);
+		printf("\nsize of queue is %d",size(q));
+		enqueue(q,4);
+		printf("\nsize of queue is %d",size(q));
+		return 0;
+	}
+		
+	

@@ -1,0 +1,52 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<limits.h>
+struct stacknode
+ {
+	 int data;
+	 struct stacknode *next;
+ };
+ struct stacknode *createstack()
+ {
+	 return NULL;
+ }
+ int emptystack(struct stacknode *s)
+ {
+	 return s==NULL;
+ }
+ void push(struct stacknode **s,int data)
+ {
+	 struct stacknode *temp=(struct stacknode *)malloc(sizeof(struct stacknode));
+	 temp->data=data;
+	 temp->next=*s;
+	 *s=temp;
+	 printf("\n%d is pushed into stack",data);
+ }
+ int pop(struct stacknode **s)
+ {
+	 if(emptystack(*s))
+	 return INT_MIN;
+	 struct stacknode *temp;
+	 temp=*s;
+	 *s=(*s)->next;
+	 return temp->data;
+ }
+ int top(struct stacknode *s)
+ {
+	 return s->data;
+ }
+ int main()
+ {
+	 struct stacknode *s=createstack();
+	 push(&s,3);
+	 push(&s,7);
+	 push(&s,13);
+	 push(&s,34);
+	 printf("\n%d id popped from the stack",pop(&s));
+	 printf("\n%d id popped from the stack",pop(&s));
+	 printf("\n%d is in the top",top(s));
+	 return 0;
+ }
+ 
+ 
+	

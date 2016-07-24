@@ -1,0 +1,82 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<limits.h>
+struct stacknode
+ {
+	 int data;
+	 struct stacknode *next;
+ };
+ struct queue
+ {
+	 struct stacknode *s1,*s2;
+ };
+ struct stacknode *createstack()
+ {
+	 return NULL;
+  }
+ struct queue *create()
+ {
+	 struct queue *q=(struct queue *)malloc(sizeof(struct queue));
+	 q->s1=createstack();
+	 q->s2=createstack();
+	 return q;
+ }
+ int emptystack(struct stacknode *s)
+ {
+	 return s==NULL;
+ }
+ void push(struct stacknode **s,int data)
+ {
+	 struct stacknode *temp=(struct stacknode *)malloc(sizeof(struct stacknode));
+	 temp->data=data;
+	 temp->next=*s;
+	 *s=temp;
+ }
+ int pop(struct stacknode **s)
+ {
+	 if(emptystack(*s))
+	 return INT_MIN;
+	 struct stacknode *temp;
+	 temp=*s;
+	 *s=(*s)->next;
+	 return temp->data;
+ }
+ int top(struct stacknode *s)
+ {
+	 return s->data;
+ }
+ void enqueue(struct queue *q,int data)
+ {
+	 push(&q->s1,data);
+	 printf("\n%d is enqueued",data);
+ }
+int dequeue(struct queue *q)
+{
+	if(q->s2)
+	pop(&q->s2);
+	else
+	{
+		while(!emptystack(q->s1))
+		push(&q->s2,pop(&q->s1));
+		pop(&q->s2);
+	}
+}
+		
+ int main()
+ {
+	 struct queue *q=create();
+	 enqueue(q,4);
+	 enqueue(q,14);
+	 enqueue(q,7);
+	 enqueue(q,8);
+	 enqueue(q,3);
+	 printf("\n");
+	 printf("\n%d is dequeued",dequeue(q));
+	 printf("\n%d is dequeued",dequeue(q));
+	 printf("\n%d is dequeued",dequeue(q));
+	 return 0;
+ }
+	 
+ 
+ 
+	

@@ -1,0 +1,98 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+	int data;
+	struct node *next;
+};
+struct node *createnode()
+{
+	 return NULL;
+}
+void insert(struct node **head,int data)
+{
+	struct node *newnode=(struct node *)malloc(sizeof(struct node));
+	struct node *temp,*p;
+	newnode->data=data;
+	newnode->next=NULL;
+	if(!*head)
+	{
+	*head=newnode;
+	return;
+	}
+	temp=*head;
+	while(temp!=NULL)
+	{
+	p=temp;
+	temp=temp->next;
+	}
+	p->next=newnode;
+}
+void print(struct node *head)
+{
+	struct node *temp;
+	temp=head;
+	while(temp!=NULL)
+	{
+		printf("\n%d",temp->data);
+		temp=temp->next;
+	}
+}
+void swap(struct node *t)
+{
+	int t1;
+	t1=t->data;
+	t->data=t->next->data;
+	t->next->data=t1;
+}
+int size(struct node *head)
+{
+	struct node *temp;
+	int count=0;
+	temp=head;
+	while(temp!=NULL)
+	{
+		count++;
+		temp=temp->next;
+	}
+	return count;
+}
+
+void absolutesort(struct node *head)
+{
+	struct node *temp;
+	temp=head;
+	int i,j,f=0;
+	for(i=0;i<size(head);i++)
+	{
+		temp=head;
+		for(j=0;j<size(head)-1;j++)
+		{
+			if(abs(temp->data)>abs(temp->next->data))
+			{
+			swap(temp);
+			f=1;
+			}
+			temp=temp->next;
+		}
+	        if(!f)
+	        break;
+	}
+}
+int main()
+{
+	struct node *head=createnode();
+	insert(&head,-5);
+	insert(&head,-7);
+	insert(&head,-25);
+	insert(&head,-3);
+	insert(&head,-45);
+	print(head);
+	printf("\nsorted list is");
+	absolutesort(head);
+	print(head);
+	return;
+}
+	
+	
+	
