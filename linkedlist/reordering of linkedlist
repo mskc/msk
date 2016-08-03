@@ -1,0 +1,105 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+	int data;
+	struct node *next;
+};
+struct node * create()
+{
+	return NULL;
+}
+void insert(struct node **head,int d)
+{
+	struct node *newnode=(struct node*)malloc(sizeof(struct node));
+	struct node *temp,*p;
+	temp=*head;
+	newnode->data=d;
+	newnode->next=NULL;
+	if(!*head)
+	{
+	*head=newnode;
+	return;
+    }
+  	while(temp!=NULL)
+    {
+    	p=temp;
+        temp=temp->next;
+	}
+	p->next=newnode;	
+}
+void print(struct node *head)
+{
+	struct node *temp;
+	temp=head;
+	while(temp!=NULL)
+	{
+		printf("\n%d",temp->data);
+		temp=temp->next;
+	}
+}
+int size(struct node **head)
+{
+	struct node *temp;
+	int count=0;
+	temp=*head;
+	while(temp!=NULL)
+	{
+		temp=temp->next;
+		count++;
+	}
+	return count;
+}
+void reorder(struct node **head)
+{
+	struct node *temp,*p,*s;
+	p=temp=*head;
+	if(size(head)%2!=0)
+	{
+	   while(p->next!=NULL)
+	  {
+		while(temp->next!=NULL)
+		{
+			s=temp;
+			temp=temp->next;
+		}
+		    s->next=NULL;
+		    temp->next=p->next;
+		    p->next=temp;
+                    p=p->next->next;
+		    temp=p;
+	    }
+	 return;
+        } 
+	else
+	{
+	    while(p->next->next!=NULL)
+	    {
+	       while(temp->next!=NULL)
+		{
+			s=temp;
+			temp=temp->next;
+		}
+		    s->next=NULL;
+		    temp->next=p->next;
+		    p->next=temp;
+		    p=p->next->next;
+		    temp=p;
+	     }
+	}
+}
+int main()
+{
+	struct node *head=create();
+	insert(&head,1);
+	insert(&head,2);
+        insert(&head,3);
+	insert(&head,4);
+	insert(&head,5);
+	insert(&head,6);
+	printf("\nelements are");
+	print(head);
+	printf("\nreordered list is");
+	reorder(&head);
+	print(head);
+	return 0;
+}
