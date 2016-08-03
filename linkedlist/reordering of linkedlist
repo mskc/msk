@@ -63,28 +63,28 @@ void reorder(struct node **head)
 			temp=temp->next;
 		}
 		    s->next=NULL;
-			temp->next=(p)->next;
-			(p)->next=temp;
-			p=(p)->next->next;
-			temp=p;
-	   }
+		    temp->next=p->next;
+		    p->next=temp;
+                    p=p->next->next;
+		    temp=p;
+	    }
 	 return;
-   } 
-	else if(size(head)!=2)
+        } 
+	else
 	{
-		while(p->next->next!=NULL)
-	  {
-		while(temp->next!=NULL)
+	    while(p->next->next!=NULL)
+	    {
+	       while(temp->next!=NULL)
 		{
 			s=temp;
 			temp=temp->next;
 		}
 		    s->next=NULL;
-			temp->next=(p)->next;
-			(p)->next=temp;
-			p=(p)->next->next;
-			temp=p;
-	  }
+		    temp->next=p->next;
+		    p->next=temp;
+		    p=p->next->next;
+		    temp=p;
+	     }
 	}
 }
 int main()
@@ -92,7 +92,7 @@ int main()
 	struct node *head=create();
 	insert(&head,1);
 	insert(&head,2);
-    insert(&head,3);
+        insert(&head,3);
 	insert(&head,4);
 	insert(&head,5);
 	insert(&head,6);
