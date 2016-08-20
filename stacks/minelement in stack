@@ -18,40 +18,38 @@ struct mainstack* createmainstack()
 	s->minstack=create();
 	return s;
 }
-int isempty(struct stacknode *s)
+int isempty(struct stacknode **s)
 {
-	return s==NULL;
+	return *s==NULL;
 }
-int top(struct stacknode *s)
+int top(struct stacknode **s)
 {
-	return s->data;
+	return (*s)->data;
 }
-void push1(struct stacknode *t,int data)
+void push1(struct stacknode **s,int data)
 {
 	struct stacknode *newnode=(struct stacknode *)malloc(sizeof(struct stacknode));
 	newnode->data=data;
-	newnode->next=t;
-	t=newnode;
+	newnode->next=*s;
+	*s=newnode;
 }
 void push(struct mainstack *s,int data)
 {
-	push1(s->elementstack,data);
-		if(isempty(s->minstack)||data<=top(s->minstack))
-		push1(s->minstack,data);
+	push1(&s->elementstack,data);
+		if(isempty(&s->minstack)||data<=top(&s->minstack))
+		push1(&s->minstack,data);
 }
 
 int minelement(struct mainstack *s)
 {
-return top(s->minstack);
+return top(&s->minstack);
 }
 int main()
 {
 	struct mainstack *s=createmainstack();
 	push(s,3);
 	push(s,2);
-	push(s,6);
-	push(s,1);
-	push(s,4);
+	push(s,0);
 	push(s,1);
 	printf("%d",minelement(s));
 	return 0;
