@@ -1,0 +1,95 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+	int data;
+	struct node *next;
+};
+struct node* create()
+{
+	return NULL;
+}
+void insert(struct node **head,int data)
+{
+	struct node *newnode=(struct node*)malloc(sizeof(struct node));
+	struct node *temp,*p;
+	temp=*head;
+	newnode->data=data;
+	newnode->next=NULL;
+	if(*head==NULL)
+	{
+		*head=newnode;
+		return;
+	}
+	while(temp!=NULL)
+	{
+		p=temp;
+		temp=temp->next;
+	}
+	p->next=newnode;
+}
+struct node* kthnode(struct node *head1,int k)
+{
+	struct node *kth;
+	int i;
+	if(!head1)
+	return head1;
+	for(i=0,kth=head1;kth&&i<k;i++,kth=kth->next);
+	if(i==k&&kth!=NULL)
+	return kth;
+	return head1->next;
+}
+int hasknodes(struct node *head,int k)
+{
+	int i;
+	for( i=0;i<k&&head;i++,head=(head)->next);
+	if(i==k)
+	return 1;
+	return 0;
+}
+void reverse(struct node **head,int k)
+{
+	struct node *current,*temp,*next;
+	if(k==0||k==1)
+	return;
+	current=*head;
+	if(!hasknodes(*head,k))
+	return;
+	*head=kthnode(*head,k-1);
+	while(current&&hasknodes(current,k))
+	{
+		temp=kthnode(kthnode(current,k-1),k);
+		int i=0;
+		while(i<k)
+		{
+			next=current->next;
+			current->next=temp;
+			temp=current;
+			current=next;
+			i++;
+		}
+	}
+}
+void print(struct node **head)
+{
+	struct node *temp=*head;
+	while(temp!=NULL)
+	{
+		printf("\n%d",temp->data);
+		temp=temp->next;
+	}
+}
+int main()
+{
+	struct node *head=create();
+	insert(&head,1);
+	insert(&head,2);
+	insert(&head,3);
+	insert(&head,4);
+	insert(&head,5);
+	print(&head);
+	reverse(&head,3);
+                printf("\nreversed list is");
+	print(&head);
+	return 0;
+	
+}
