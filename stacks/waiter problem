@@ -1,0 +1,119 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct stacknode{
+	int data;
+	struct stacknode *next;
+};
+struct mainstack{
+	struct stacknode *s1,*s2,*s3;
+};
+struct stacknode *create()
+{
+	return NULL;
+}
+struct mainstack *createmainstack()
+{
+	struct mainstack *s=(struct mainstack*)malloc(sizeof(struct mainstack));
+	s->s1=create();
+	s->s2=create();
+	s->s3=create();
+}
+int isempty(struct stacknode **s)
+{
+	if(*s==NULL)
+	return 1;
+	return 0;
+}
+void push1(struct stacknode **s,int data)
+{
+	struct stacknode *newnode=(struct stacknode *)malloc(sizeof(struct stacknode));
+	newnode->data=data;
+	newnode->next=*s;
+	*s=newnode;
+}
+void push(struct mainstack *s,int data)
+{
+	push1(&s->s1,data);
+}
+int pop(struct stacknode **s)
+{
+	int temp;
+	temp=(*s)->data;
+	*s=(*s)->next;
+	return temp;
+}
+void print(struct stacknode **s)
+{
+	struct stacknode *temp;
+	temp=*s;
+	while(temp!=NULL)
+	{
+		printf("\n%d",temp->data);
+		temp=temp->next;
+	}
+}
+void prime(struct mainstack *s,int q)
+{
+	int c=0;
+for(int i=2;i<100&&c<=q;i++)
+ {
+   for(int j=2;j<i;j++)
+   {
+	if(i==2||i%j==0)
+	{
+		c++;
+		if(isempty(&s->s2)==1)
+		{
+			while((isempty(&s->s1)!=1))
+			{
+			int a=pop(&s->s1);
+			if(a%i==0)
+			push1(&s->s3,a);
+			else
+			push1(&s->s2,a);
+		    }  
+		}
+		else
+		{
+			while((isempty(&s->s2)!=1))
+			{
+			int a=pop(&s->s2);
+			if(a%i==0)
+			push1(&s->s3,a);
+			else
+			push1(&s->s1,a);
+		    }  
+		}
+	}
+ }
+}
+   if(isempty(&s->s1)==1||isempty(&s->s2)==1)
+   {
+   	if(isempty(&s->s1)==0)
+	 {
+   	 while(isempty(&s->s3)==0)
+   		push1(&s->s1,pop(&s->s3));
+	   print(&s->s1);
+     }
+     else
+      {
+   	    while(isempty(&s->s3)==0)
+   		push1(&s->s2,pop(&s->s3));
+	    print(&s->s2);
+     }  
+   }
+}
+int main()
+{ 
+    int q;
+	struct mainstack *s=createmainstack();
+	push(s,3);
+	push(s,4);
+	push(s,7);
+	push(s,6);
+	push(s,5);
+	printf("enter q");
+	scanf("%d",&q);
+    prime(s,q);
+    return 0;
+}
