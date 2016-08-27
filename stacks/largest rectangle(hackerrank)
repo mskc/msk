@@ -1,0 +1,102 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct stacknode{
+	int data;
+	struct stacknode *next;
+};
+struct mainstack{
+	struct stacknode *s1,*s2,*s3;
+};
+struct stacknode* create()
+{
+    return NULL;
+}
+struct mainstack* createmainstack(){
+	struct mainstack *s=(struct mainstack*)malloc(sizeof(struct mainstack));
+	s->s1=create();
+	s->s2=create();
+	s->s3=create();
+}
+int isempty(struct stacknode **s)
+{
+	if(*s==NULL)
+	return 1;
+	return 0;
+}
+void push1(struct stacknode **s,int data)
+{
+	struct stacknode *newnode=(struct stacknode *)malloc(sizeof(struct stacknode));
+	newnode->data=data;
+	newnode->next=*s;
+	*s=newnode;
+}
+void push(struct mainstack *s,int data)
+{
+	push1(&s->s1,data);
+}
+int top(struct stacknode **s)
+{
+	return (*s)->data;
+}
+int size(struct stacknode **s)
+{
+	struct stacknode *temp;
+	temp=*s;
+	int count=0;
+	while(temp!=NULL)
+	{
+		count++;
+		temp=temp->next;
+	}
+	return count;
+}
+int min(struct stacknode *temp,int k)
+{
+	int t;
+	struct stacknode *next;
+	t=temp->data;
+	next=temp->next;
+	int i=1;
+	while(i<k)
+	{
+	if(next->data<t)
+	   t=next->data;
+	   temp=next;
+	   next=next->next;
+	   i++;
+	}
+	return k*t;
+}
+int largestrectangle(struct mainstack *s)
+{
+	struct stacknode *temp,*p;
+	int i=1,a;
+	push1(&s->s2,top(&s->s1));
+	for(int t=1;t<=size(&s->s1);t++)
+	{
+		p=s->s1;
+		while(i<=t)
+		{   
+		    temp=p;
+			p=p->next;
+			i++;
+		}
+		for(int k=1;k<=size(&s->s1)-t+1;k++)
+		{
+			a=min(temp,k);
+			if(a>top(&s->s2))
+			push1(&s->s2,a);
+		}
+	}
+	return top(&s->s2);
+}
+int main()
+{
+	struct mainstack *s=createmainstack();
+	push(s,1);
+	push(s,2);
+	push(s,3);
+	push(s,4);
+	push(s,5);
+	printf("\nlargest rectangle is %d ",largestrectangle(s));
+}
