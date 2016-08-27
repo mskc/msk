@@ -5,7 +5,7 @@ struct stacknode{
 	struct stacknode *next;
 };
 struct mainstack{
-	struct stacknode *s1,*s2,*s3;
+	struct stacknode *s1,*s2;
 };
 struct stacknode* create()
 {
@@ -15,7 +15,6 @@ struct mainstack* createmainstack(){
 	struct mainstack *s=(struct mainstack*)malloc(sizeof(struct mainstack));
 	s->s1=create();
 	s->s2=create();
-	s->s3=create();
 }
 int isempty(struct stacknode **s)
 {
