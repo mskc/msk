@@ -69,10 +69,11 @@ int min(struct stacknode *temp,int k)
 int largestrectangle(struct mainstack *s)
 {
 	struct stacknode *temp,*p;
-	int i=1,a;
+	int i,a;
 	push1(&s->s2,top(&s->s1));
 	for(int t=1;t<=size(&s->s1);t++)
 	{
+                                i=1;
 		p=s->s1;
 		while(i<=t)
 		{   
