@@ -1,0 +1,48 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<limits.h>
+struct treenode{
+	int data;
+	struct treenode *right,*left;
+};
+struct treenode*createtree()
+{
+	return NULL;
+}
+struct treenode* node(int data)
+{
+	struct treenode *newnode=(struct treenode *)malloc(sizeof(struct treenode ));
+	newnode->data=data;
+	newnode->left=newnode->right=NULL;
+	return newnode;
+}
+int maxelement(struct treenode *root)
+{
+	int left,right,max;
+	left=right=max=INT_MIN;
+	if(root!=NULL)
+	{
+	left=maxelement(root->left);
+	right=maxelement(root->right);
+	if(left>right)
+	max=left;
+	else
+	max=right;
+	if(root->data>max)
+	max=root->data;
+   }
+   return max; 
+}
+int main()
+{
+	struct treenode *root,*t;
+	root=createtree();
+	root=node(1);
+	root->left=node(2);
+	root->right=node(3);
+	t=root->left;
+	t->left=node(5);
+	t->right=node(4);
+	printf("%d",maxelement(root));
+	return 0;
+}
