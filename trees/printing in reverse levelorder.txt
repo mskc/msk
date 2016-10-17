@@ -1,0 +1,123 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<limits.h>
+struct treenode{
+	int data;
+	struct treenode *right,*left;
+};
+struct treenode* createtree()
+{
+	return NULL;
+}
+struct node
+{
+	struct treenode *data;
+	struct node *next;
+};
+struct queue
+{
+		struct node *front,*rear;
+ };
+ struct queue *createqueue()
+ {
+	  struct queue *q=(struct queue*)malloc(sizeof(struct queue));
+	  struct node *temp=(struct node *)malloc(sizeof(struct node));
+	  if(!q)return NULL;
+	  q->front=q->rear=NULL;
+     return q;	  
+ }
+ int empty(struct queue *q)
+	 { 
+	   return q->front==NULL;
+	  }
+void enqueue(struct queue *q,struct treenode* data)
+	{
+		struct node *newnode=(struct node *)malloc(sizeof(struct node));
+		if(!newnode)return;
+		newnode->data=data;
+		newnode->next=NULL;
+		if(q->rear==NULL)
+		{
+		q->rear=q->front=newnode;
+		return;
+		}
+		q->rear->next=newnode;
+		q->rear=newnode;
+	}
+struct treenode *dequeue(struct queue *q)
+	{
+		if(empty(q))return NULL;
+		struct node *temp;
+		temp=q->front;
+		q->front=q->front->next;
+		if(q->front==NULL)
+		q->rear=NULL;
+		return temp->data;
+	}
+struct node* create()
+{
+	return NULL;
+}
+int isempty(struct node **s)
+{
+	if(*s==NULL)
+	return 1;
+	return 0;
+}
+void push(struct node **s,struct treenode* data)
+{
+	struct node *newnode=(struct node *)malloc(sizeof(struct node));
+	newnode->data=data;
+	newnode->next=*s;
+	*s=newnode;
+}
+struct treenode* pop(struct node **s)
+{
+	struct treenode *temp;
+	temp=(*s)->data;
+	*s=(*s)->next;
+	return temp;
+}
+struct treenode* node(int data)
+{
+	struct treenode *newnode=(struct treenode *)malloc(sizeof(struct treenode ));
+	newnode->data=data;
+	newnode->left=newnode->right=NULL;
+	return newnode;
+}
+void print(struct treenode *root)
+{
+	struct treenode *t;
+	struct queue *q=createqueue();
+	struct node *s=create();
+	if(root==NULL)
+	return;
+	enqueue(q,root);
+	while(!empty(q))
+	{
+		t=dequeue(q);
+		if(t->right)
+		enqueue(q,t->right);
+		if(t->left)
+		enqueue(q,t->left);
+		push(&s,t);
+	}
+	while(!isempty(&s))
+		printf("%d ",pop(&s)->data);
+}
+int main()
+{
+	struct treenode *root,*t,*t1;
+	root=createtree();
+	root=node(1);
+	root->left=node(2);
+	root->right=node(3);
+	t=root->left;
+	t->left=node(4);
+	t->right=node(5);
+	t1=root->right;
+	t1->left=node(6);
+	t1->right=node(7);
+	print(root);
+	return 0;
+}
