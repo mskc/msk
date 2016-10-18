@@ -1,0 +1,94 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<limits.h>
+struct treenode{
+	int data;
+	struct treenode *right,*left;
+};
+struct treenode* createtree()
+{
+	return NULL;
+}
+struct node
+{
+	struct treenode *data;
+	struct node *next;
+};
+struct queue
+{
+		struct node *front,*rear;
+ };
+ struct queue *create()
+ {
+	  struct queue *q=(struct queue*)malloc(sizeof(struct queue));
+	  struct node *temp=(struct node *)malloc(sizeof(struct node));
+	  if(!q)return NULL;
+	  q->front=q->rear=NULL;
+     return q;	  
+ }
+ int empty(struct queue *q)
+	 { 
+	   return q->front==NULL;
+	  }
+void enqueue(struct queue *q,struct treenode* data)
+	{
+		struct node *newnode=(struct node *)malloc(sizeof(struct node));
+		if(!newnode)return;
+		newnode->data=data;
+		newnode->next=NULL;
+		if(q->rear==NULL)
+		{
+		q->rear=q->front=newnode;
+		return;
+		}
+		q->rear->next=newnode;
+		q->rear=newnode;
+	}
+struct treenode *dequeue(struct queue *q)
+	{
+		if(empty(q))return NULL;
+		struct node *temp;
+		temp=q->front;
+		q->front=q->front->next;
+		if(q->front==NULL)
+		q->rear=NULL;
+		return temp->data;
+	}
+	struct treenode* node(int data)
+{
+	struct treenode *newnode=(struct treenode *)malloc(sizeof(struct treenode ));
+	newnode->data=data;
+	newnode->left=newnode->right=NULL;
+	return newnode;
+}
+struct treenode* deepestnode(struct treenode *root)
+{
+	struct queue *q=create();
+	struct treenode *t;
+	if(root==NULL)
+	return NULL;
+	enqueue(q,root);
+	while(!empty(q))
+	{
+		t=dequeue(q);
+		if(t->left)
+		enqueue(q,t->left);
+		if(t->right)
+		enqueue(q,t->right);
+	}
+	return t;
+}
+int main()
+{
+	struct treenode *root,*t;
+	root=createtree();
+	root=node(1);
+	root->left=node(2);
+	root->right=node(3);
+	t=root->left;
+	t->left=node(5);
+	t->right=node(4);
+	t->left->left=node(6);
+	printf("\n%d",deepestnode(root)->data);
+	return 0;
+}
