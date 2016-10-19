@@ -1,0 +1,29 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct treenode{
+	int data;
+	struct treenode *left,*right;
+};
+struct treenode* node(int data)
+{
+	struct treenode *node=(struct treenode *)malloc(sizeof(struct treenode));
+	node->data=data;
+	node->right=node->left=NULL;
+	return node;
+}
+int sumofallelements(struct treenode *root)
+{
+	if(root==NULL)
+	return 0;
+	return (sumofallelements(root->left)+root->data+sumofallelements(root->right));
+}
+int main()
+{
+	struct treenode *root=NULL;
+	root=node(1);
+	root->left=node(2);
+	root->right=node(3);
+	root->left->left=node(4);
+	root->left->right=node(5);
+	printf("\n%d",sumofallelements(root));
+}
