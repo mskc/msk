@@ -1,0 +1,42 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct treenode{
+	int data;
+	struct treenode *left,*right;
+};
+struct treenode* node(int data)
+{
+	struct treenode *node=(struct treenode *)malloc(sizeof(struct treenode));
+	node->data=data;
+	node->right=node->left=NULL;
+	return node;
+}
+int pathsum(struct treenode*root,int sum)
+{
+	if(root==NULL)
+	return sum==0;
+	else
+	{
+		int remainingsum=sum-root->data;
+		if((root->right&&root->left)||(!root->right&&!root->left));
+		return (pathsum(root->right,remainingsum)||pathsum(root->left,remainingsum));
+		if(root->left)
+		pathsum(root->left,remainingsum);
+		else
+		pathsum(root->right,remainingsum);
+	}
+}
+int main()
+{
+	struct treenode *root=NULL;
+	root=node(1);
+	root->left=node(2);
+	root->right=node(3);
+	root->left->left=node(4);
+	root->left->right=node(5);
+	if(pathsum(root,7))
+	printf("path is present");
+	else
+	printf("path is not present");
+	return 0;
+}
