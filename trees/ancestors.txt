@@ -1,0 +1,40 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct treenode{
+	int data;
+	struct treenode *right,*left;
+};
+struct treenode* node(int data)
+{
+	struct treenode *newnode=(struct treenode *)malloc(sizeof(struct treenode ));
+	newnode->data=data;
+	newnode->left=newnode->right=NULL;
+	return newnode;
+}
+int ancestor(struct treenode*root,struct treenode* data)
+{
+	if(root==NULL)
+	return 0;
+	if(root->left==data||root->right==data||ancestor(root->left,data)||ancestor(root->right,data))
+	{
+	printf("\n%d",root->data);
+	return 1;
+    }
+	return 0;
+}
+int main()
+{
+	struct treenode *root,*t,*r;
+	root=t=r=NULL;
+	root=node(1);
+	root->left=node(2);
+	root->right=node(3);
+	t=root->left;
+	t->left=node(4);
+	t->right=node(5);
+	r=root->right;
+	r->left=node(6);
+	r->right=node(7);
+	ancestor(root,r->right);
+	return 0;
+}
