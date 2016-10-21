@@ -1,0 +1,37 @@
+//Generic tree repesentation and initialization
+#include<stdio.h>
+#include<stdlib.h>
+struct treenode{
+	int data;
+	struct treenode *firstchild,*sibling;
+};
+struct treenode* node(int data)
+{
+	struct treenode*node=(struct treenode*)malloc(sizeof(struct treenode));
+	node->data=data;
+	node->firstchild=node->sibling=NULL;
+	return node;
+}
+void print(struct treenode *root)
+{
+	if(root==NULL)
+	return;
+	printf("\n%d",root->data);
+	print(root->sibling);
+	print(root->firstchild);
+}
+int main()
+{
+	struct treenode *root,*r;
+	root=NULL;
+	root=node(1);
+	root->firstchild=node(2);
+	root->firstchild->sibling=node(3);
+	r=root->firstchild->sibling;
+	r->sibling=node(4);
+	r->firstchild=node(5);
+	r->firstchild->sibling=node(6);
+	print(root);
+	return 0;
+}
+
