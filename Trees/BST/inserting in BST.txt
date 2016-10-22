@@ -1,0 +1,56 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct treenode{
+	int data;
+	struct treenode *right,*left;
+};
+struct treenode* node(int data)
+{
+	struct treenode *node=(struct treenode*)malloc(sizeof(struct treenode));
+	node->data=data;
+	node->right=node->left=NULL;
+	return node;
+}
+struct treenode* insert(struct treenode* root,int data)
+{
+	if(root==NULL)
+	{
+	root=(struct treenode*)malloc(sizeof(struct treenode));
+	root->data=data;
+	root->right=root->left=NULL;
+   }
+    else
+    {
+    	if(data<root->data)
+    	root->left=insert(root->left,data);
+    	else if(data>root->data)
+    	root->right=insert(root->right,data);
+	}
+	return root;
+}
+void print(struct treenode *root)
+{
+	if(root==NULL)
+	return;
+	if(root->left)
+	print(root->left);
+    printf("\n%d",root->data);
+	if(root->right)
+	print(root->right);
+}
+int main()
+{
+	struct treenode *root,*t,*r;
+	root=node(4);
+	root->right=node(6);
+	root->left=node(2);
+	t=root->right;
+	r=root->left;
+	t->right=node(7);
+	t->left=node(5);
+	r->right=node(3);
+	r->left=node(1);
+	root=insert(root,8);
+	print(root);
+	return 0;
+}
