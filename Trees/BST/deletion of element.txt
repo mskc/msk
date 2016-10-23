@@ -1,0 +1,79 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct treenode{
+	int data;
+	struct treenode *right,*left;
+};
+struct treenode* node(int data)
+{
+	struct treenode *node=(struct treenode*)malloc(sizeof(struct treenode));
+	node->data=data;
+	node->right=node->left=NULL;
+	return node;
+}
+struct treenode*  maximum(struct treenode *root)
+{
+	if(root==NULL)
+	return NULL;
+	if(root->right==NULL)
+	return root;
+	else
+	return maximum(root->right);
+}
+void print(struct treenode *root)
+{
+	if(root==NULL)
+	return;
+	if(root->left)
+	print(root->left);
+    printf("\n%d",root->data);
+	if(root->right)
+	print(root->right);
+}
+struct treenode* deletion(struct treenode *root,int data)
+{
+	struct treenode *temp;
+	if(root==NULL)
+	return NULL;
+	else if(data<root->data)
+	root->left=deletion(root->left,data);
+	else if(data>root->data)
+	root->right=deletion(root->right,data);
+	else
+	{
+		if(!root->right&&!root->left)
+		return NULL;
+		if(root->left&&root->right)
+		{
+			temp=maximum(root->left);
+			root->data=temp->data;
+			root->left=deletion(root->left,root->data);
+		}
+		else if(root->right||root->left)
+		{
+			temp=root;
+			if(root->left==NULL)
+			root=root->right;
+			if(root->right==NULL)
+			root=root->left;
+		}
+	}
+	return root;
+}
+int main()
+{
+	struct treenode *root,*t,*r;
+	root=node(4);
+	root->right=node(6);
+	root->left=node(2);
+	t=root->right;
+	r=root->left;
+	t->right=node(7);
+	t->left=node(5);
+	r->right=node(3);
+	r->left=node(1);
+	deletion(root,4);
+	root=deletion(root,4);
+	print(root);
+	return 0;
+}
