@@ -1,0 +1,86 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct heap{
+	int capacity;
+	int count;
+	int *array;
+};
+struct heap* create(int c)
+{
+	struct heap *h=(struct heap *)malloc(sizeof(struct heap));
+	h->capacity=c;
+	h->count=0;
+	h->array =(int*)malloc(sizeof(int)*h->capacity);
+	return h;
+}
+int leftchild(struct heap *h,int i)
+{
+	int left=2*i+1;
+	if(left>h->capacity)
+	return -1;
+	return left;
+}
+int rightchild(struct heap *h,int i)
+{
+	int right=2*i+2;
+	if(right>h->capacity)
+	return -1;
+	return right;
+}
+void percolate(struct heap *h,int i)
+{
+	int l,r,max,temp;
+	l=leftchild(h,i);
+	r=rightchild(h,i);
+	if(l!=-1&&h->array[l]>h->array[i])
+	max=l;
+	else
+	max=i;
+	if(r!=-1&&h->array[r]>h->array[max])
+	max=r;
+	if(max!=i)
+	{
+		temp=h->array[i];
+		h->array[i]=h->array[max];
+		
+		h->array[max]=temp;
+    percolate(h,max);
+    }
+}  
+void buildheap(struct heap *h,int A[],int n)
+{
+	if(h==NULL)
+	return;
+	for(int i=0;i<n;i++)
+	h->array[i]=A[i];
+	h->count=n;
+	for(int i=(n-1)/2;i>=0;i--)
+	percolate(h,i);
+}
+void heapsort(struct heap *h)
+{
+	int n=h->count;
+	int temp;
+	for(int i=n-1;i>=0;i--)
+	{
+		temp=h->array[0];
+		h->array[0]=h->array[h->count-1];
+		h->array[h->count-1]=temp;
+		h->count--;
+		percolate(h,0);
+	}
+	h->count=n;
+	}
+void display(struct heap *h)
+{
+	for(int i=0;i<h->count;i++)
+	printf("%d\n",h->array[i]);
+}
+int main()
+{
+	struct heap *h=create(20);
+	int s[]={9,2,7,6,5};
+	buildheap(h,s,5);
+	heapsort(h);
+	display(h);
+}
