@@ -1,0 +1,77 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+	int data;
+	struct node *next;
+};
+struct graph{
+	int v;
+	struct node** a;
+};
+struct graph* createadjlist(int v)
+{
+	struct graph* g=(struct graph*)malloc(sizeof(struct graph));
+	g->v=v;
+	g->a=(struct node**)malloc(v*sizeof(struct node));
+	for(int i=0;i<g->v;i++)
+	{
+	g->a[i]=(struct node*)malloc(sizeof(struct node));
+	g->a[i]->data=i;
+	g->a[i]->next=NULL;
+    }
+    return g;
+}
+void edgelist(struct graph *g,int src,int des)
+{
+	struct node *t,*t1;
+	t=g->a[src];
+	while(t->next!=NULL)
+	t=t->next;
+	struct node *temp=(struct node*)malloc(sizeof(struct node));
+	temp->data=des;
+	temp->next=NULL;
+	t->next=temp;
+    t1=g->a[des];
+	while(t1->next!=NULL)
+	t1=t1->next;
+	struct node *temp1=(struct node*)malloc(sizeof(struct node));
+	temp1->data=src;
+	temp1->next=NULL;
+	t1->next=temp1;
+}
+void dfs(struct graph *g,int i,int *visited)
+{
+	visited[i]=1;
+	printf("\n%d",i);
+	struct node* temp;
+	for(temp=g->a[i]->next;temp!=NULL;temp=temp->next)
+	{
+		if(!visited[temp->data])
+		dfs(g,temp->data,visited);
+    }
+}
+void dfstraversal(struct graph *g)
+{
+	int visited[g->v];
+	for(int i=0;i<g->v;i++)
+	visited[i]=0;
+	struct node *temp;
+	temp=g->a[1]->next;
+	dfs(g,0,visited);
+}
+int main()
+{
+	
+	struct graph *g=createadjlist(8);
+	edgelist(g,0,1);
+	edgelist(g,1,2);
+	edgelist(g,2,3);
+	edgelist(g,2,4);
+	edgelist(g,4,5);
+	edgelist(g,4,6);
+	edgelist(g,4,7);
+	edgelist(g,1,7);
+	dfstraversal(g);
+	
+}
+
