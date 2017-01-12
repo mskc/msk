@@ -1,0 +1,61 @@
+#include<stdio.h>
+#include<stdlib.h>
+void merge(int *a,int *temp,int l,int m,int h)
+{
+	int left,t,size,low,high;
+	left=m-1;
+	high=h;
+	low=t=l;
+	size=h-l+1;
+	while(l<=left&&m<=h)
+	{
+		if(a[l]<=a[m])
+		{
+			temp[t]=a[l];
+			t++;
+			l++;
+		}
+		else{
+			temp[t]=a[m];
+			m++;
+			t++;
+		}
+	}
+	while(l<=left)
+	{
+		temp[t]=a[l];
+		t++;
+		l++;
+	}
+	while(m<=h)
+	{
+	  temp[t]=a[m];
+	  t++;
+	  m++;
+	}
+	for(int i=low;i<=high;i++){
+		a[i]=temp[i];
+	}
+}
+void mergesort(int *a,int *t,int l,int h)
+{
+	int mid;
+	if(l<h)
+	{
+	mid=(l+h)/2;
+	mergesort(a,t,l,mid);
+	mergesort(a,t,mid+1,h);
+	merge(a,t,l,mid+1,h);
+    }
+    else 
+	return;
+}
+int main()
+{
+	int a[]={9,8,7,6,5,4,3,2};
+	int temp[8];
+	mergesort(a,temp,0,7);
+	for(int i=0;i<8;i++)
+	printf("\n%d",a[i]);
+	return 0;
+}
