@@ -1,0 +1,137 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+	int data;
+	struct node *next;
+};
+struct queue
+{
+		struct node *front,*rear;
+ };
+ struct queue *createqueue()
+ {
+	  struct queue *q=(struct queue*)malloc(sizeof(struct queue));
+	  struct node *temp=(struct node *)malloc(sizeof(struct node));
+	  if(!q)return NULL;
+	  q->front=q->rear=NULL;
+     return q;	  
+ }
+ int isemptyqueue(struct queue *q)
+	 { 
+	   return q->front==NULL;
+	  }
+void enqueue(struct queue *q,int data)
+	{
+		struct node *newnode=(struct node *)malloc(sizeof(struct node));
+		if(!newnode)return;
+		newnode->data=data;
+		newnode->next=NULL;
+		if(q->rear==NULL)
+		{
+		q->rear=q->front=newnode;
+		return;
+		}
+		q->rear->next=newnode;
+		q->rear=newnode;
+	}
+int dequeue(struct queue *q)
+	{
+		if(isemptyqueue(q))
+		return INT_MIN;
+		struct node *temp;
+		temp=q->front;
+		q->front=q->front->next;
+		if(q->front==NULL)
+		q->rear=NULL;
+		return temp->data;
+	}
+struct graph{
+	int v;
+	struct node** a;
+};
+struct graph* createadjlist(int v)
+{
+	struct graph* g=(struct graph*)malloc(sizeof(struct graph));
+	g->v=v;
+	g->a=(struct node**)malloc(v*sizeof(struct node));
+	for(int i=0;i<g->v;i++)
+	{
+	g->a[i]=(struct node*)malloc(sizeof(struct node));
+	g->a[i]->data=i;
+	g->a[i]->next=NULL;
+    }
+    return g;
+}
+void edgelist(struct graph *g,int src,int des)
+{
+	struct node *t;
+	t=g->a[src];
+	while(t->next!=NULL)
+	t=t->next;
+	struct node *temp=(struct node*)malloc(sizeof(struct node));
+	temp->data=des;
+	temp->next=NULL;
+	t->next=temp;
+}
+void topologicalsort(struct graph *g,int *indegree)
+{
+	int u,count=0;
+	struct queue *q=createqueue();
+	for(int i=0;i<g->v;i++)
+	if(indegree[i]==0)
+	enqueue(q,i);
+	while(!isemptyqueue(q))
+	{
+		u=dequeue(q); 
+		printf("\n%d",u);
+		struct node *temp;
+		for(temp=g->a[u]->next;temp!=NULL;temp=temp->next)	    
+	    {
+	    	if(--indegree[temp->data]==0)
+	    	enqueue(q,temp->data);
+		}   
+    }
+}
+void ttraversal(struct graph *g)
+{
+	int indegree[g->v];
+	for(int i=0;i<g->v;i++)
+	indegree[i]=0;
+	for(int i=0;i<g->v;i++)
+	{
+		for(int j=0;j<g->v;j++)
+		{
+			struct node *temp;
+			if(i!=j)
+			{
+				temp=g->a[j]->next;
+			     while(temp!=NULL)
+			     {
+				  if(temp->data==g->a[i]->data)
+				  {
+				  indegree[i]=1;
+				   break;
+			      }
+			      temp=temp->next;
+			     }
+		    }
+		}
+}
+	topologicalsort(g,indegree);
+	
+}
+int main()
+{
+	
+	struct graph *g=createadjlist(8);
+	edgelist(g,1,0);
+	edgelist(g,2,0);
+	edgelist(g,3,4);
+	edgelist(g,4,5);
+	edgelist(g,0,7);
+	edgelist(g,0,5);
+	edgelist(g,3,6);
+	edgelist(g,1,4);
+	edgelist(g,0,6);
+	ttraversal(g);
+}
