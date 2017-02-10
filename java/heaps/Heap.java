@@ -7,7 +7,7 @@ class Heap {
 		int[] a;
 	 public Heap1(int capacity){
 		 this.capacity=capacity;
-		 int a[]=new int[capacity];
+		 a=new int[capacity];
 	 }
 	}
 	 public void buildheap(int[] b,int n)
@@ -25,14 +25,14 @@ class Heap {
 	 public int leftchild(Heap1 h,int i)
 	 {
 		 int left=2*i+1;
-		 if(left>h.capacity)
+		 if(left>=h.capacity)
 			 return -1;
 			return left; 
 	 }
 	 public int rightchild(Heap1 h,int i)
 	 {
 		 int right=2*i+2;
-		 if(right>h.capacity)
+		 if(right>=h.capacity)
 			 return -1;
 			return right; 
 	 }
@@ -45,7 +45,7 @@ class Heap {
 			 max=l;
 		 else
 			 max=i;
-		 if(r!=-1&&h.a[r]>max)
+		 if(r!=-1&&h.a[r]>h.a[max])
 			 max=r;
 		 if(max!=i)
 		 {
