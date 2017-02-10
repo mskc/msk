@@ -1,0 +1,40 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct treenode{
+	char data;
+	struct treenode *left,*right;
+};
+struct treenode* create(char p[],int *i)
+{
+	struct treenode *newnode=(struct treenode *)malloc(sizeof(struct treenode));
+	newnode->data=p[*i];
+	newnode->left=newnode->right=NULL;
+	if(p==NULL)
+	return NULL;
+	if(p[*i]=='l')
+	return newnode;
+	*i=*i+1;
+	newnode->left=create(p,i);
+	*i=*i+1;
+	newnode->right=create(p,i);
+	return newnode;
+}
+void print(struct treenode *root)
+{
+	if(root==NULL)
+	return;
+	printf("\n%c",root->data);
+	if(root->left)
+	print(root->left);
+	if(root->right)
+	print(root->right);
+}
+int main()
+{
+	struct treenode *root;
+	char p[]={"ilill"};
+	int r=0;
+	int *i=&r;
+	root=create(p,i);
+	print(root);
+}

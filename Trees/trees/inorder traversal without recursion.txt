@@ -1,0 +1,71 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct treenode{
+	int data;
+	struct treenode *right,*left;
+};
+struct stacknode{
+	struct treenode *data;
+	struct stacknode *next;
+};
+struct stacknode* create()
+{
+	return NULL;
+}
+struct treenode *createtree()
+{
+	return NULL;
+}
+int isempty(struct stacknode **s)
+{
+	if(*s==NULL)
+	return 1;
+	return 0;
+}
+void push(struct stacknode **s,struct treenode* data)
+{
+	struct stacknode *newnode=(struct stacknode *)malloc(sizeof(struct stacknode));
+	newnode->data=data;
+	newnode->next=*s;
+	*s=newnode;
+}
+struct treenode* pop(struct stacknode **s)
+{
+	struct treenode *temp;
+	temp=(*s)->data;
+	*s=(*s)->next;
+	return temp;
+}
+struct treenode* node(int data)
+{
+	struct treenode *newnode=(struct treenode *)malloc(sizeof(struct treenode ));
+	newnode->data=data;
+	newnode->left=newnode->right=NULL;
+	return newnode;
+}
+void print(struct treenode *root)
+{
+	struct stacknode *s=create();
+	while(1)
+	{
+		while(root)
+		{
+			push(&s,root);
+			root=root->left;
+		}
+		if(isempty)
+		break;
+		root=pop(&s);
+		printf("\n%d",root->data);
+		root=root->right;
+	}
+}
+int main()
+{
+	struct treenode *root=createtree();
+	root=node(1);
+	root->left=node(2);
+	root->right=node(3);
+	print(root);
+	return 0;
+}

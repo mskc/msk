@@ -1,0 +1,46 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct treenode{
+	int data;
+	struct treenode *child[];
+};
+struct treenode* generictree(int p[],int n,int k)
+{
+	static int s=0;
+	if(n<=0)
+	return NULL;
+	struct treenode *newnode=(struct treenode *)malloc(sizeof(struct treenode));
+	struct treenode *child=(struct treenode *)malloc(k*sizeof(struct treenode));
+	newnode->data=p[s];
+	for(int i=0;i<k;i++)
+	{
+		if(n-s>=k)
+		{
+			s++;
+			newnode->child[i]=generictree(p,n,k);
+		}
+		else
+		newnode->child[i]=NULL;
+	}
+	return newnode;
+}
+void print(struct treenode *root,int k)
+{
+	if(root==NULL)
+	return;
+	printf("\n%d",root->data);
+	for(int i=0;i<k;i++)
+	print(root->child[i],k);
+}
+int main()
+{
+	struct treenode *root;
+	int p[]={1,2,3,4,5,6,7,8,9,10};
+	int n=10;
+	int k=3;
+	static int s=0;
+	int *a=&s;
+	root=generictree(p,n,k);
+	print(root,k);
+	return 0;
+}

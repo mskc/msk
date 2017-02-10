@@ -1,0 +1,53 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct treenode{
+	int data;
+	struct treenode *left,*right;
+};
+struct treenode* node(int data)
+{
+	struct treenode *node=(struct treenode*)malloc(sizeof(struct treenode));
+	node->data=data;
+	node->right=node->left=NULL;
+	return node;
+}
+int search(int in[],int instrt,int inend,int data)
+{
+	int i;
+	for(i=instrt;i<inend;i++)
+	{
+	if(in[i]==data)
+	break;
+    }    
+	return i;
+}
+struct treenode* binarytree(int p[],int in[],int instrt,int inend)
+{
+	static int pindex=0;
+	if(instrt>inend)
+	return NULL;
+	struct treenode *newnode=(struct treenode*)malloc(sizeof(struct treenode));
+	newnode->data=p[pindex];
+	pindex++;
+	if(instrt==inend)
+	return newnode;
+	int inindex=search(in,instrt,inend,newnode->data);
+	newnode->left=binarytree(p,in,instrt,inindex-1);
+	newnode->right=binarytree(p,in,inindex+1,inend);
+	return newnode;
+}
+int main()
+{
+	struct treenode* root=NULL;
+	int p[]={1,2,4,5,3,6,7};
+	int in[]={5,2,4,1,6,3,7};
+	root=binarytree(p,in,0,6);
+	printf("\n%d",root->data);
+	printf("\n%d",root->left->data);
+	printf("%d",root->right->data);
+	printf("\n%d",root->left->left->data);
+	printf("%d",root->left->right->data);
+	printf("%d",root->right->left->data);
+	printf("%d",root->right->right->data);
+	return 0;
+}

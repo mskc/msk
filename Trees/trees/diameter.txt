@@ -1,0 +1,51 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct treenode{
+	int data;
+	struct treenode *right,*left;
+};
+struct treenode* node(int data)
+{
+	struct treenode *node=(struct treenode *)malloc(sizeof(struct treenode));
+	node->data=data;
+	node->right=node->left=NULL;
+	return node;
+}
+struct treenode* createtree()
+{
+return NULL;
+}
+int max(int x,int y)
+{
+return (x>=y)?x:y;
+}
+int diameterOpt(struct treenode *root, int* height)
+{
+  int lh = 0, rh = 0;
+  int ldiameter = 0, rdiameter = 0;
+  if(root == NULL)
+  {
+    *height = 0;
+     return 0;
+  }
+  ldiameter = diameterOpt(root->left, &lh);
+  rdiameter = diameterOpt(root->right, &rh);
+  *height = max(lh, rh) + 1;
+  
+  return max(lh + rh + 1, max(ldiameter, rdiameter));
+}
+int main()
+{
+	struct treenode *root,*t;
+	int h=0;
+	root=createtree();
+	root=node(1);
+	root->left=node(2);
+	root->right=node(3);
+	t=root->left;
+	t->right=node(4);
+	t->left=node(5);
+    printf("\n%d",diameterOpt(root,&h));
+	return 0;
+}
+

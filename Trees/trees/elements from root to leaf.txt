@@ -1,0 +1,52 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct treenode{
+	int data;
+	struct treenode *right,*left;
+};
+struct treenode* createtree()
+{
+	return NULL;
+}
+struct treenode* node(int data)
+{
+	struct treenode *node=(struct treenode*)malloc(sizeof(struct treenode));
+	node->data=data;
+	node->right=node->left=NULL;
+	return node;
+}
+void print(int p[],int len)
+{
+	printf("\n");
+	for(int i=0;i<len;i++)
+	printf("\n%d",p[i]);
+}
+void roottoleaf(struct treenode *root,int p[],int len)
+{
+	if(root==NULL)
+	return;
+    p[len]=root->data;
+	len++;
+
+	if(root->left==NULL&&root->right==NULL)
+	print(p,len);
+	else
+	{
+		roottoleaf(root->left,p,len);
+		roottoleaf(root->right,p,len);
+	}
+}
+int main()
+{
+	struct treenode *root,*t,*r;
+	int p[10],len=0;
+	root=createtree();
+	root=node(1);
+	root->left=node(2);
+	root->right=node(3);
+	t=root->left;
+	t->right=node(4);
+	t->left=node(5);
+	roottoleaf(root,p,len);
+	return 0;
+}

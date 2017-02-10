@@ -1,0 +1,58 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct treenode{
+	int data;
+	struct treenode *right,*left;
+};
+ struct dllnode{
+	int data;
+	struct node *next,*prev;
+};
+struct treenode* node(int data)
+{
+	struct treenode *node=(struct treenode*)malloc(sizeof(struct treenode));
+	node->data=data;
+	node->right=node->left=NULL;
+	return node;
+}
+void print(struct treenode **head_ref)
+	{
+	          struct treenode *current;
+	          current=*head_ref;
+		while(current!=NULL)
+                                 {
+		printf("%d",current->data);
+	                current=current->right;
+		}
+	}
+void BSTtoDLL(struct treenode *root,struct treenode **last ,struct treenode **head)
+{
+	if(root==NULL)
+	return;
+	BSTtoDLL(root->left,last,head);
+	if(*last)
+	(*last)->right=root;
+	else
+	*head=*last;
+	root->left=*last;
+	*last=root;
+	if(root->right)
+	BSTtoDLL(root->right,last,head);
+}
+int main()
+{
+	struct treenode *root,*t,*r,*last,*head;
+	root=last=head=NULL;
+	root=node(4);
+	root->right=node(6);
+	root->left=node(2);
+	t=root->right;
+	r=root->left;
+	t->right=node(7);
+	t->left=node(5);
+	r->right=node(3);
+	r->left=node(1);
+	BSTtoDLL(root,&last,&head);
+	print(&head);
+	return 0;
+}

@@ -1,0 +1,37 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct treenode{
+	int data;
+	struct treenode *right,*left;
+};
+struct treenode*createtree()
+{
+	return NULL;
+}
+struct treenode* node(int data)
+{
+	struct treenode *newnode=(struct treenode *)malloc(sizeof(struct treenode ));
+	newnode->data=data;
+	newnode->left=newnode->right=NULL;
+	return newnode;
+}
+int size(struct treenode *root)
+{
+	if(root==NULL)
+	return 0;
+	else
+	return(size(root->left)+1+size(root->right));
+}
+int main()
+{
+	struct treenode *root,*t;
+	root=createtree();
+	root=node(1);
+	root->left=node(2);
+	root->right=node(3);
+	t=root->left;
+	t->left=node(5);
+	t->right=node(4);
+	printf("%d",size(root));
+	return 0;
+}
