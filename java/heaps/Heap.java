@@ -13,7 +13,7 @@ class Heap {
 	 public void buildheap(int[] b,int n)
 	 {
 		 h=new Heap1(n);
-		 System.out.println("r");
+		 //System.out.println("r");
 		 for(int i=0;i<n;i++){
 			 h.a[i]=b[i];
 		 }
